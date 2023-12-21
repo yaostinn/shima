@@ -35,18 +35,20 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
   };
 
   return (
-    <Paper w={300} withBorder p="xs">
+    <Paper className="code">
       <TextInput
         label="Имя"
         description="Оно сохранится на веб"
         placeholder="Input placeholder"
         {...form.getInputProps("name")}
+        className="text"
       />
       <Textarea
         label="Code"
         description="Save"
         placeholder="Input placeholder"
         {...form.getInputProps("code")}
+        className="text"
       />
 
       <Button onClick={handleSubmit} fullWidth mt="xs">
