@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Button, Table } from "@mantine/core";
+import { Button, Modal, Table } from "@mantine/core";
 import Code from "../Code/Code";
 import { CodeTableData } from "../../types";
 import "./table.css";
@@ -7,6 +7,8 @@ import SortIcon from "../sortIcon";
 
 const CodeTable: React.FC = () => {
   const [data, setData] = useState<CodeTableData[]>([]);
+  const [curData, setCurData] = useState<CodeTableData>();
+  const [modalOpened, setModalOpened] = useState<boolean>(false);
 
   useEffect(() => {
     getData();
@@ -27,12 +29,12 @@ const CodeTable: React.FC = () => {
   };
 
   const handleFormSubmit = () => {
-    getData(); // Refresh data on successful form submission
+    getData();
   };
 
   const handleSort = (id: keyof CodeTableData) => {
     setData((prevData) => {
-      const newData = [...prevData]; // Create a new array to avoid mutating the state directly
+      const newData = [...prevData];
 
       newData.sort((a: CodeTableData, b: CodeTableData) => {
         if (id === "updated_at" || id === "created_at") {
@@ -48,6 +50,21 @@ const CodeTable: React.FC = () => {
 
       return newData;
     });
+  };
+
+  const requestDetails = async (id: string) => {
+    try {
+      const response = await fetch(
+        `https://nikostin.pythonanywhere.com/api/codes/${id}`
+      );
+      if (response.ok) {
+        const jsonData: CodeTableData = await response.json();
+        setCurData(jsonData);
+        setModalOpened(true);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   return (
@@ -106,7 +123,11 @@ const CodeTable: React.FC = () => {
           </Table.Thead>
           <Table.Tbody>
             {data.map((el) => (
-              <Table.Tr key={el.id} className="tohover">
+              <Table.Tr
+                key={el.id}
+                className="tohover"
+                onClick={() => requestDetails(`${el.id}`)}
+              >
                 <Table.Td className="table__td">{el.id}</Table.Td>
                 <Table.Td className="table__td">
                   <a key={el.id} href={`/code/${el.id}`}>
@@ -128,6 +149,25 @@ const CodeTable: React.FC = () => {
           </Table.Tbody>
         </div>
       </Table>
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        centered
+        title="Details"
+      >
+        <div className="modal">
+          <p>ID: {curData?.id}</p>
+          <p>Name: {curData?.name}</p>
+          <p>Code: {curData?.code}</p>
+          <p>Response: {curData?.execution_response}</p>
+          <p>
+            Created: {new Date(curData?.created_at as string).toDateString()}
+          </p>
+          <p>
+            Updated: {new Date(curData?.updated_at as string).toDateString()}
+          </p>
+        </div>
+      </Modal>
     </div>
   );
 };
