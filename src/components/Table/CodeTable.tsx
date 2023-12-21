@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Table } from "@mantine/core";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, Table } from "@mantine/core";
 import Code from "../Code/Code";
 import { CodeTableData } from "../../types";
 import "./table.css";
+import SortIcon from "../sortIcon";
 
 const CodeTable: React.FC = () => {
   const [data, setData] = useState<CodeTableData[]>([]);
@@ -29,11 +30,70 @@ const CodeTable: React.FC = () => {
     getData(); // Refresh data on successful form submission
   };
 
+  const handleSort = (id: keyof CodeTableData) => {
+    setData((prevData) => {
+      const newData = [...prevData]; // Create a new array to avoid mutating the state directly
+
+      newData.sort((a: CodeTableData, b: CodeTableData) => {
+        if (id === "updated_at" || id === "created_at") {
+          const date1 = new Date(a[id]);
+          const date2 = new Date(b[id]);
+          return date1.getTime() - date2.getTime();
+        } else if (typeof a[id] === "string") {
+          return a[id].localeCompare(b[id]);
+        } else {
+          return 0;
+        }
+      });
+
+      return newData;
+    });
+  };
+
   return (
     <div className="wrapper">
       <Code onFormSubmit={handleFormSubmit} />
       <Table className="table">
         <div className="table-wrapper">
+          <Table.Thead>
+            <Table.Tr className="table__tr__sort">
+              <Table.Th></Table.Th>
+              <Table.Th>
+                <Button className="button" onClick={() => handleSort("name")}>
+                  <SortIcon />
+                </Button>
+              </Table.Th>
+              <Table.Th>
+                <Button className="button" onClick={() => handleSort("code")}>
+                  <SortIcon />
+                </Button>
+              </Table.Th>
+              <Table.Th>
+                <Button
+                  className="button"
+                  onClick={() => handleSort("execution_response")}
+                >
+                  <SortIcon />
+                </Button>
+              </Table.Th>
+              <Table.Th>
+                <Button
+                  className="button"
+                  onClick={() => handleSort("created_at")}
+                >
+                  <SortIcon />
+                </Button>
+              </Table.Th>
+              <Table.Th>
+                <Button
+                  className="button"
+                  onClick={() => handleSort("updated_at")}
+                >
+                  <SortIcon />
+                </Button>
+              </Table.Th>
+            </Table.Tr>
+          </Table.Thead>
           <Table.Thead>
             <Table.Tr className="table__tr">
               <Table.Th className="table__th">ID</Table.Th>
