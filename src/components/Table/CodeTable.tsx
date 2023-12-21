@@ -1,28 +1,33 @@
-import { useEffect, useState } from 'react'
-import { Table, Modal } from '@mantine/core'
-import Code from '../Code/Code'
-// import useDisclosure from '@mantine/hooks'
-const CodeTable = () => {
-  const [data, setData] = useState([])
-  // const [opened, { open, close }] = useDisclosure(false)
+import React, { useEffect, useState } from "react";
+import { Table } from "@mantine/core";
+import Code from "../Code/Code";
+import { CodeTableData } from "../../types";
+
+const CodeTable: React.FC = () => {
+  const [data, setData] = useState<CodeTableData[]>([]);
+
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   const getData = async () => {
-    const response = await fetch(
-      'https://nikostin.pythonanywhere.com/api/codes/'
-    )
-    const d = await response.json()
-    if (response.ok) {
-      setData(d)
+    try {
+      const response = await fetch(
+        "https://nikostin.pythonanywhere.com/api/codes/"
+      );
+      if (response.ok) {
+        const jsonData: CodeTableData[] = await response.json();
+        setData(jsonData);
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
     }
-  }
+  };
 
   const handleFormSubmit = () => {
-    getData() // Обновляем данные при успешной отправке формы
-  }
-ч
+    getData(); // Refresh data on successful form submission
+  };
+
   return (
     <>
       <Code onFormSubmit={handleFormSubmit} />
@@ -43,7 +48,7 @@ const CodeTable = () => {
             <Table.Tr key={el.id}>
               <Table.Td>{el.id}</Table.Td>
               <Table.Td>
-                <a key={el?.id} href={`/code/${el.id}`}>
+                <a key={el.id} href={`/code/${el.id}`}>
                   {el.name}
                 </a>
               </Table.Td>
@@ -56,7 +61,7 @@ const CodeTable = () => {
         </Table.Tbody>
       </Table>
     </>
-  )
-}
+  );
+};
 
-export default CodeTable
+export default CodeTable;
