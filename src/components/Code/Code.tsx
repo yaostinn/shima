@@ -48,7 +48,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
   };
 
   return (
-    <Paper className="code">
+    <Paper className="code" data-testid="cypress-form">
       <TextInput
         id="name"
         label="Имя"
@@ -56,6 +56,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
         placeholder="Input placeholder"
         {...form.getInputProps("name")}
         className="text"
+        data-testid="cypress-form-name"
       />
       <Textarea
         id="code"
@@ -64,9 +65,12 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
         placeholder="Input placeholder"
         {...form.getInputProps("code")}
         className="text"
+        data-testid="cypress-form-code"
       />
 
-      <Button id='button' onClick={handleSubmit} fullWidth mt="xs">
+
+      <Button onClick={handleSubmit} fullWidth mt="xs" data-testid="cypress-form-button">
+
         Сохранить
       </Button>
     </Paper>

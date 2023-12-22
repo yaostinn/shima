@@ -69,8 +69,8 @@ const CodeTable: React.FC = () => {
 
   return (
     <div className="wrapper">
-      <Code onFormSubmit={handleFormSubmit} />
-      <Table className="table">
+      <Code onFormSubmit={handleFormSubmit}/>
+      <Table className="table" data-testid="cypress-table">
         <div className="table-wrapper">
           <Table.Thead>
             <Table.Tr className="table__tr__sort">
