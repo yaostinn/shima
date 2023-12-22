@@ -24,7 +24,7 @@ async function testForm(data) {
     let lastElementCode = elementsCode[elementsCode.length - 1];
 
 
-    if (await lastElementName.getText() == data[i][0] && await lastElementCode.getText()==data[i][1]) {
+    if ((await lastElementName.getText() == data[i][0] && await lastElementCode.getText()==data[i][1])==data[i][2]) {
       console.log(`${i + 1} тест пройден`);
     } else {
       console.log(`${i + 1} тест не пройден`);
@@ -78,11 +78,11 @@ async function testSortByUpdatedAt (){
 }
 
 let data = [
-  ['', ''],
-  ['остин', ''],
-  ['альберт', '2+2'],
-  ['никита', '2/0'],
-  ['никита', 'wefw']
+  ['', '',false],
+  ['остин', '',false],
+  ['альберт', '2+2',true],
+  ['никита', '2/0',true],
+  ['никита', 'wefw',false]
 ];
 
-testSortByName()
+testForm(data)
