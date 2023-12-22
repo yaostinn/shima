@@ -12,13 +12,26 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
       code: "",
     },
   });
+  const handleResponseSava=async()=>{
+    const response = await fetch('http://localhost:8000/submit',{
+      headers:{
+        "Content-Type":"application/json"
+      },
+      method: "POST",
+      body: JSON.stringify(form.values.code)
+    })
+
+    const data = await response.json();
+
+    return data.stdout;
+  }
 
   const handleSubmit = async () => {
     const formData = new FormData();
 
     formData.append("name", form.values.name);
     formData.append("code", form.values.code);
-    formData.append("execution_response", eval(form.values.code).toString());
+    formData.append("execution_response", await handleResponseSava());
 
     const response = await fetch(
       "https://nikostin.pythonanywhere.com/api/codes/",
