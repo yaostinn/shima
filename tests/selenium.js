@@ -17,10 +17,10 @@ async function testForm(data) {
 
    await new Promise(resolve => setTimeout(resolve, 2000));
 
-    let elementsName = await driver.wait(until.elementsLocated(By.className('name')), 10000);
+    let elementsName = await driver.wait(until.elementsLocated(By.className('name_td')), 10000);
     let lastElementName = elementsName[elementsName.length - 1];
 
-    let elementsCode = await driver.wait(until.elementsLocated(By.className('code')), 10000);
+    let elementsCode = await driver.wait(until.elementsLocated(By.className('code_td')), 10000);
     let lastElementCode = elementsCode[elementsCode.length - 1];
 
 
@@ -32,57 +32,30 @@ async function testForm(data) {
 }
 }
 
-async function testSortByName(){
-   let buttonByName = await driver.findElement(By.xpath('//*[@id="byName"]'));
-
-   buttonByName.click();
-
-   await new Promise(resolve => setTimeout(resolve, 2000));
-
-   let elementsName = await driver.wait(until.elementsLocated(By.className('name')), 10000);
-   let names = [];
- 
-   for (let element of elementsName) {
-     let name = await element.getText();
-     names.push(name);
-   }
- 
-   let isSorted = true;
-   for (let i = 1; i < names.length; i++) {
-     if (names[i] < names[i - 1]) {
-       isSorted = false;
-       break;
-     }
-   }
- 
-   if (isSorted) {
-     console.log('Имена идут по возрастанию.Тест пройден');
-   } else {
-     console.log('Имена не идут по возрастанию.Тест не пройден');
-   }
-}
-
-async function testSortByCode(){
-   let buttonByCode = await driver.findElement(By.xpath('//*[@id="byCode"]'));
-}
-
-async function testSortByExecutionResponse(){
-   let buttonbByExecutionResponse = await driver.findElement(By.xpath('//*[@id="byExecutionResponse"]'));
-}
-
-async function testSortByCreatedAt(){
-   let buttonByCreatedAt = await driver.findElement(By.xpath('//*[@id="byCreatedAt"]'));
-}
-async function testSortByUpdatedAt (){
-   let buttonByUpdatedAt = await driver.findElement(By.xpath('//*[@id="byUpdatedAt"]'));
-}
-
 let data = [
   ['', '',false],
   ['остин', '',false],
   ['альберт', '2+2',true],
+  ['никита', '10000000**2',true],
+  ['матвей', '(1+4)*5',true],
+  ['даник',"(5+5)*(3**2)",true],
+  ['альберт', '2*0',true],
+  ['никита', '2**0',true],
+  ['матвей', '(1+4)*5',true],
+  ['даник',"(5+5)*(3^25)",true],
+  ['альберт', '2+2',true],
   ['никита', '2/0',true],
-  ['никита', 'wefw',false]
+  ['матвей', '(1+4)*(4445)',true],
+  ['даник',"(5+5)*(1.2)",true],
+  ['альберт', '2*2',true],
+  ['никита', '222313.12311',true],
+  ['матвей', '1321',true],
+  ['даник',"(5+5)*(3^2)",true],
 ];
 
-testForm(data)
+async function test(){
+await testForm(data)
+driver.quit()
+}
+
+test()

@@ -87,7 +87,8 @@ const CodeTable: React.FC = () => {
               </Table.Th>
               <Table.Th>
                 <Button
-                  className="button" id="byExecutionResponse"
+                  className="button" 
+                  id="byExecutionResponse"
                   onClick={() => handleSort("execution_response")}
                 >
                   <SortIcon />
@@ -95,7 +96,8 @@ const CodeTable: React.FC = () => {
               </Table.Th>
               <Table.Th>
                 <Button
-                  className="button" id="byCreatedAt"
+                  className="button"
+                   id="byCreatedAt"
                   onClick={() => handleSort("created_at")}
                 >
                   <SortIcon />
@@ -130,18 +132,18 @@ const CodeTable: React.FC = () => {
               >
                 <Table.Td className="table__td"  >{el.id}</Table.Td>
                 <Table.Td className="table__td">
-                  <a className="name"key={el.id} href={`/code/${el.id}`}>
+                  <a className="name_td"key={el.id} href={`/code/${el.id}`}>
                     {el.name}
                   </a>
                 </Table.Td>
-                <Table.Td className="table__td code">{el.code}</Table.Td>
-                <Table.Td bg="green" className="table__td">
+                <Table.Td className="table__td code_td">{el.code}</Table.Td>
+                <Table.Td bg="green" className="table__td execution_response_td">
                   {el.execution_response}
                 </Table.Td>
-                <Table.Td className="table__td">
+                <Table.Td className="table__td created_at_td">
                   {new Date(el.created_at).toDateString()}
                 </Table.Td>
-                <Table.Td className="table__td">
+                <Table.Td className="table__td updated_at_td">
                   {new Date(el.updated_at).toDateString()}
                 </Table.Td>
               </Table.Tr>
