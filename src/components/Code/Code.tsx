@@ -37,6 +37,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
   return (
     <Paper className="code">
       <TextInput
+        id="name"
         label="Имя"
         description="Оно сохранится на веб"
         placeholder="Input placeholder"
@@ -44,6 +45,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
         className="text"
       />
       <Textarea
+        id="code"
         label="Code"
         description="Save"
         placeholder="Input placeholder"
@@ -51,7 +53,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
         className="text"
       />
 
-      <Button onClick={handleSubmit} fullWidth mt="xs">
+      <Button id='button' onClick={handleSubmit} fullWidth mt="xs">
         Сохранить
       </Button>
     </Paper>
