@@ -76,18 +76,18 @@ const CodeTable: React.FC = () => {
             <Table.Tr className="table__tr__sort">
               <Table.Th></Table.Th>
               <Table.Th>
-                <Button className="button" onClick={() => handleSort("name")}>
+                <Button className="button" id="byName" onClick={() => handleSort("name")}>
                   <SortIcon />
                 </Button>
               </Table.Th>
               <Table.Th>
-                <Button className="button" onClick={() => handleSort("code")}>
+                <Button className="button" id="byCode" onClick={() => handleSort("code")}>
                   <SortIcon />
                 </Button>
               </Table.Th>
               <Table.Th>
                 <Button
-                  className="button"
+                  className="button" id="byExecutionResponse"
                   onClick={() => handleSort("execution_response")}
                 >
                   <SortIcon />
@@ -95,7 +95,7 @@ const CodeTable: React.FC = () => {
               </Table.Th>
               <Table.Th>
                 <Button
-                  className="button"
+                  className="button" id="byCreatedAt"
                   onClick={() => handleSort("created_at")}
                 >
                   <SortIcon />
@@ -103,7 +103,7 @@ const CodeTable: React.FC = () => {
               </Table.Th>
               <Table.Th>
                 <Button
-                  className="button"
+                  className="button" id='byUpdatedAt'
                   onClick={() => handleSort("updated_at")}
                 >
                   <SortIcon />
@@ -121,20 +121,20 @@ const CodeTable: React.FC = () => {
               <Table.Th className="table__th">Updated at</Table.Th>
             </Table.Tr>
           </Table.Thead>
-          <Table.Tbody>
+          <Table.Tbody >
             {data.map((el) => (
               <Table.Tr
                 key={el.id}
                 className="tohover"
                 onClick={() => requestDetails(`${el.id}`)}
               >
-                <Table.Td className="table__td">{el.id}</Table.Td>
+                <Table.Td className="table__td"  >{el.id}</Table.Td>
                 <Table.Td className="table__td">
-                  <a key={el.id} href={`/code/${el.id}`}>
+                  <a className="name"key={el.id} href={`/code/${el.id}`}>
                     {el.name}
                   </a>
                 </Table.Td>
-                <Table.Td className="table__td">{el.code}</Table.Td>
+                <Table.Td className="table__td code">{el.code}</Table.Td>
                 <Table.Td bg="green" className="table__td">
                   {el.execution_response}
                 </Table.Td>
