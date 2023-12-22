@@ -35,13 +35,14 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
   };
 
   return (
-    <Paper className="code">
+    <Paper className="code" data-testid="cypress-form">
       <TextInput
         label="Имя"
         description="Оно сохранится на веб"
         placeholder="Input placeholder"
         {...form.getInputProps("name")}
         className="text"
+        data-testid="cypress-form-name"
       />
       <Textarea
         label="Code"
@@ -51,7 +52,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
         className="text"
       />
 
-      <Button onClick={handleSubmit} fullWidth mt="xs">
+      <Button onClick={handleSubmit} fullWidth mt="xs" data-testid="cypress-form-button">
         Сохранить
       </Button>
     </Paper>
