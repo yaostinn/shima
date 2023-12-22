@@ -11,18 +11,15 @@ describe('render-test', () => {
     cy.get('[data-testid="cypress-table"]').should('exist');
   })
 
-  it("deleting info after save", () => {
+  it("clear form after save", () => {
     cy.visit("http://localhost:5173/");
 
-    cy.get('[data-testid="cypress-form-button"]').then(($btn) => {
-      $btn.on("click",() => {
-        cy
-          .get('[data-testid="cypress-form-name]')
-          .should("exist")
-          .should("have.text", "")
-    });
-    });
-  })
+    cy.get('[data-testid="cypress-form-name"]').type('2+2')
+    cy.get('[data-testid="cypress-form-code"]').type('2+5')
 
- 
+    cy.get('[data-testid="cypress-form-button"]').click()
+
+    cy.get('[data-testid="cypress-form-name"]').should('have.value', '')
+    cy.get('[data-testid="cypress-form-code"]').should('have.value', '')
+  })
 })

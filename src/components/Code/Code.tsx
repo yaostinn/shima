@@ -50,6 +50,7 @@ const Code: React.FC<CodeProps> = ({ onFormSubmit }) => {
         placeholder="Input placeholder"
         {...form.getInputProps("code")}
         className="text"
+        data-testid="cypress-form-code"
       />
 
       <Button onClick={handleSubmit} fullWidth mt="xs" data-testid="cypress-form-button">
