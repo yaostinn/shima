@@ -55,7 +55,12 @@ let data = [
 
 async function test(){
 await testForm(data)
-driver.quit()
+await testSortByName()
+await testSortByCode()
+await testSortByExecutionResponse()
+await testSortByCreatedAt()
+await testSortByUpdatedAt()
+// driver.quit()
 }
 
 test()
